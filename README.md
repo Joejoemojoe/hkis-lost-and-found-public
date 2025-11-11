@@ -42,6 +42,14 @@ Hosting notes
 	- Render / Fly / Heroku: any Node host that runs `npm start` can serve the app.
 	- If you must use GitHub-hosted workflows, set up a GitHub Actions workflow to build and deploy to a Node host.
 
+GitHub Pages (static) deployment
+- If you want to deploy a static-only version of the site to GitHub Pages (note: it will be static and API routes will not work), I added a GitHub Actions workflow that:
+	1. runs `npm run build`
+	2. runs `npm run export` to generate a static `out/` directory
+	3. publishes `out/` to the `gh-pages` branch using `peaceiris/actions-gh-pages`
+
+To enable this, push to `main` and Actions will run automatically. The workflow file is `.github/workflows/deploy-gh-pages.yml`.
+
 	Persistence note
 	- The demo saves uploaded images to `public/uploads` on the filesystem and stores metadata in `data/items.json`.
 	- On many serverless hosts (like Vercel Serverless Functions), the ephemeral filesystem means uploads will not persist between deployments or function invocations. For production use, move image storage to an external object store (S3, Cloudinary) and use a database for metadata.
